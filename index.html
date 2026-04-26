@@ -116,7 +116,6 @@
 
   /* ── HERO ── */
   .hero {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,7 +162,7 @@
     font-size: clamp(2.5rem, 7vw, 5.5rem);
     font-weight: 900;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: -4rem;
     background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -172,69 +171,12 @@
     animation: fadeSlideUp 0.8s 0.4s forwards;
   }
 
-  .hero-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-    font-weight: 300;
-    color: var(--text-muted);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeSlideUp 0.8s 0.6s forwards;
-  }
-
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2.5rem;
-    border: 1px solid var(--accent-primary);
-    background: transparent;
-    color: var(--accent-primary);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.4s;
-    opacity: 0;
-    animation: fadeSlideUp 0.8s 0.8s forwards;
-    cursor: pointer;
-  }
-
-  .hero-cta:hover {
-    background: var(--accent-primary);
-    color: var(--bg-deep);
-    box-shadow: 0 0 40px var(--accent-glow);
-  }
-
-  .hero-scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0;
-    animation: fadeIn 1s 1.5s forwards;
-  }
-
   .hero-scroll-hint span {
     font-family: 'Space Mono', monospace;
     font-size: 0.6rem;
     color: var(--text-dim);
     letter-spacing: 3px;
     text-transform: uppercase;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--accent-primary), transparent);
-    animation: scrollPulse 2s infinite;
   }
 
   @keyframes scrollPulse {
@@ -259,14 +201,6 @@
   .section-header {
     margin-bottom: 4rem;
     position: relative;
-  }
-
-  .section-number {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.7rem;
-    color: var(--accent-primary);
-    letter-spacing: 4px;
-    margin-bottom: 0.5rem;
   }
 
   .section-title {
@@ -523,15 +457,12 @@
     box-shadow: 0 12px 40px rgba(233,69,96,0.12);
   }
 
-  .jam-thumb-placeholder {
+  .jam-thumb {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, var(--bg-mid), var(--bg-card));
-    border-bottom: 1px solid var(--border-subtle);
+    aspect-ratio: 2.15 / 1;
+    object-fit: cover;
+    border: 1px solid var(--border-subtle);
+    display: block;
   }
 
   .jam-info { padding: 1.25rem; }
@@ -888,12 +819,6 @@
   <div class="hero-content">
     <div class="hero-label">Game Developer &amp; Software Engineer</div>
     <h1 class="hero-name">RADU-CONSTANTIN<br>MATUSA</h1>
-    <p class="hero-title">Unity Developer · Startup Co-Founder · ITU Copenhagen</p>
-    <a href="#projects" class="hero-cta">View My Work <span class="arrow">→</span></a>
-  </div>
-  <div class="hero-scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
   </div>
 </section>
 
@@ -902,7 +827,6 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="section-header reveal">
-    <div class="section-number">01 //</div>
     <h2 class="section-title">ABOUT ME</h2>
     <div class="section-line"></div>
   </div>
@@ -915,8 +839,8 @@
     <div class="about-stats reveal">
       <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Games Shipped</div></div>
       <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label">Years in Gamedev</div></div>
-      <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Studios</div></div>
       <div class="stat-card"><div class="stat-number">MSc</div><div class="stat-label">ITU Copenhagen</div></div>
+      <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Smaller Projects</div></div>
     </div>
   </div>
 </section>
@@ -926,7 +850,6 @@
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-header reveal">
-    <div class="section-number">02 //</div>
     <h2 class="section-title">PROJECTS</h2>
     <div class="section-line"></div>
   </div>
@@ -982,10 +905,10 @@
       </div>
       <div class="project-media">
         <div class="project-screenshots">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/bad5d1159fe6a17484b5fac5ba80ac0b.poster.avif?t=1776940746" alt="Nanokings combat" loading="lazy">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/b98e13270212f1240942450cf0bd8a88.poster.avif?t=1776940746" alt="Nanokings enemies" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/2116aeb18c7e535f94adcc1c257e5d5f3fa5a994/ss_2116aeb18c7e535f94adcc1c257e5d5f3fa5a994.1920x1080.jpg?t=1776940746" alt="Nanokings combat" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/71fcf430e56ed03fd3ae15f19eb73f2c518fc836/ss_71fcf430e56ed03fd3ae15f19eb73f2c518fc836.1920x1080.jpg?t=1776940746" alt="Nanokings enemies" loading="lazy">
           <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/010d3688469adda15bccd19981a69050.poster.avif?t=1776940746" alt="Nanokings boss" loading="lazy">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/84e355982aba14df70eb312616647e9f.poster.avif?t=1776940746" alt="Nanokings gameplay" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/6f90a29059527f3f7509f45eac50a277afe16726/ss_6f90a29059527f3f7509f45eac50a277afe16726.1920x1080.jpg?t=1776940746" alt="Nanokings gameplay" loading="lazy">
         </div>
       </div>
     </div>
@@ -1012,10 +935,10 @@
       </div>
       <div class="project-media">
         <div class="project-screenshots">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/b109e53696fe58b7b4e5c10e9a0a1eab.poster.avif?t=1664573659" alt="NanoHive gameplay" loading="lazy">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/73f89c9e923bcc9ee594285da95a4eb4.poster.avif?t=1664573659" alt="NanoHive nanobots" loading="lazy">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/ffda82a9e8ba6c0cd1dc5718b310d660.poster.avif?t=1664573659" alt="NanoHive absorb" loading="lazy">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/b05a0f61212f29d9f3d491dd5f1b35e6.poster.avif?t=1664573659" alt="NanoHive speed" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/ss_686075922a2f25ff64d3f741523e1508001f43ae.1920x1080.jpg?t=1664573659" alt="NanoHive gameplay" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/ss_fb7ed8f9f9b808283e916cf0f1de3b12c8ce19dc.1920x1080.jpg?t=1664573659" alt="NanoHive nanobots" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/ss_3663c32f0215d88220777986605caff75aef92b2.1920x1080.jpg?t=1664573659" alt="NanoHive absorb" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/ss_9bb13aeaaa7d2fb17da7a3c2faa1e3b59770fcd3.1920x1080.jpg?t=1664573659" alt="NanoHive speed" loading="lazy">
         </div>
       </div>
     </div>
@@ -1027,13 +950,12 @@
 <!-- GAME JAMS -->
 <section id="gamejams">
   <div class="section-header reveal">
-    <div class="section-number">03 //</div>
     <h2 class="section-title">GAME JAMS & EXPERIMENTS</h2>
     <div class="section-line"></div>
   </div>
   <div class="jams-grid reveal">
     <a class="jam-card" href="https://dj-dave.itch.io/bobo-the-nightslayer" target="_blank">
-      <div class="jam-thumb-placeholder">🧸</div>
+      <div class="jam-thumb">🧸</div>
       <div class="jam-info">
         <div class="jam-name">Bobo the Nightslayer</div>
         <div class="jam-desc">Command the toy army and slay the nightmares to protect your human's dreams.</div>
@@ -1041,7 +963,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://turoxd02.itch.io/no-cats-in-heaven" target="_blank">
-      <div class="jam-thumb-placeholder">🐱</div>
+      <div class="jam-thumb">🐱</div>
       <div class="jam-info">
         <div class="jam-name">No Cats in Heaven</div>
         <div class="jam-desc">Fast-paced arcade freefall inspired by Downwell: escape an angel as you dive through the sky in search of your lost cat.</div>
@@ -1049,7 +971,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://empty-box.itch.io/smash-pool" target="_blank">
-      <div class="jam-thumb-placeholder">🎱</div>
+      <div class="jam-thumb">🎱</div>
       <div class="jam-info">
         <div class="jam-name">Smash Pool</div>
         <div class="jam-desc">Good old pool, but with significantly more chaos.</div>
@@ -1057,7 +979,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://andreimatao.itch.io/catharsis" target="_blank">
-      <div class="jam-thumb-placeholder">🌸</div>
+      <div class="jam-thumb">🌸</div>
       <div class="jam-info">
         <div class="jam-name">Cottage Core Catharsis</div>
         <div class="jam-desc">A peaceful picnic at sunset, turned psychedelic extravaganza.</div>
@@ -1065,7 +987,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://radu-constantin-matusa.itch.io/doors-98exe" target="_blank">
-      <div class="jam-thumb-placeholder">🚪</div>
+      <div class="jam-thumb">🚪</div>
       <div class="jam-info">
         <div class="jam-name">DOORS 98.EXE</div>
         <div class="jam-desc">Macrohard — A retro-themed platformer with a Windows 98 twist.</div>
@@ -1073,7 +995,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://radu-constantin-matusa.itch.io/danish-weather-forecast" target="_blank">
-      <div class="jam-thumb-placeholder">🌧️</div>
+      <div class="jam-thumb">🌧️</div>
       <div class="jam-info">
         <div class="jam-name">Danish Weather Forecast</div>
         <div class="jam-desc">Unleash your inner meteorologist, and show the world what you're really made of!</div>
@@ -1081,7 +1003,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://empty-box.itch.io/original-sin" target="_blank">
-      <div class="jam-thumb-placeholder">🔥</div>
+      <div class="jam-thumb">🔥</div>
       <div class="jam-info">
         <div class="jam-name">Original Sin</div>
         <div class="jam-desc">A night of ancient myths shared around a cozy fire.</div>
@@ -1089,7 +1011,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://radu-constantin-matusa.itch.io/detective-wizard-the-smoking-owl" target="_blank">
-      <div class="jam-thumb-placeholder">🦉</div>
+      <div class="jam-thumb">🦉</div>
       <div class="jam-info">
         <div class="jam-name">Detective Wizard: The Smoking Owl</div>
         <div class="jam-desc">Play as a wizard detective investigating the murder of an owl familiar.</div>
@@ -1097,7 +1019,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://faluditomi.itch.io/korosseo" target="_blank">
-      <div class="jam-thumb-placeholder">⚔️</div>
+      <div class="jam-thumb">⚔️</div>
       <div class="jam-info">
         <div class="jam-name">Korosseo</div>
         <div class="jam-desc">A wave-based, first person, arena shooter.</div>
@@ -1105,7 +1027,7 @@
       </div>
     </a>
     <a class="jam-card" href="https://radu-constantin-matusa.itch.io/the-trainwreck" target="_blank">
-      <div class="jam-thumb-placeholder">🚂</div>
+      <div class="jam-thumb">🚂</div>
       <div class="jam-info">
         <div class="jam-name">The Trainwreck</div>
         <div class="jam-desc">Coal above all. Nothing else matters.</div>
@@ -1123,7 +1045,6 @@
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-header reveal">
-    <div class="section-number">04 //</div>
     <h2 class="section-title">EXPERIENCE</h2>
     <div class="section-line"></div>
   </div>
@@ -1158,7 +1079,6 @@
 <!-- SKILLS -->
 <section id="skills">
   <div class="section-header reveal">
-    <div class="section-number">05 //</div>
     <h2 class="section-title">SKILLS & TOOLS</h2>
     <div class="section-line"></div>
   </div>
@@ -1216,7 +1136,6 @@
 <!-- EDUCATION -->
 <section id="education">
   <div class="section-header reveal">
-    <div class="section-number">06 //</div>
     <h2 class="section-title">EDUCATION</h2>
     <div class="section-line"></div>
   </div>
@@ -1241,7 +1160,6 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-header reveal">
-    <div class="section-number">07 //</div>
     <h2 class="section-title">GET IN TOUCH</h2>
     <div class="section-line" style="margin-left:auto;margin-right:auto;"></div>
   </div>
