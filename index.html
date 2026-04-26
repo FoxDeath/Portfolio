@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radu-Constantin Matusa | Game Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0a0f;
+    --bg-mid: #12121c;
+    --bg-card: #1a1a2e;
+    --accent-primary: #e94560;
+    --accent-secondary: #0f3460;
+    --accent-glow: #e9456066;
+    --text-primary: #eaeaf0;
+    --text-muted: #8888aa;
+    --text-dim: #555570;
+    --border-subtle: #2a2a44;
+    --gradient-hero: linear-gradient(135deg, #0a0a0f 0%, #16213e 50%, #0a0a0f 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) var(--bg-deep);
+  }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.7);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--accent-primary);
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s, text-shadow 0.3s;
+    position: relative;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-primary);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-hero);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(233,69,96,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(233,69,96,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+  }
+
+  @keyframes gridMove {
+    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+    100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--accent-primary);
+    background: transparent;
+    color: var(--accent-primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s 0.8s forwards;
+    cursor: pointer;
+  }
+
+  .hero-cta:hover {
+    background: var(--accent-primary);
+    color: var(--bg-deep);
+    box-shadow: 0 0 40px var(--accent-glow);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+
+  .hero-scroll-hint span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent-primary), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .section-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+
+  .section-line {
+    width: 60px;
+    height: 2px;
+    background: var(--accent-primary);
+    margin-top: 1rem;
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  .glitch-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    opacity: 0.3;
+  }
+
+  /* ── ABOUT ── */
+  #about { border-top: 1px solid var(--border-subtle); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .about-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .stat-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent-primary);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .stat-card:hover::before { opacity: 1; }
+
+  .stat-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent-primary);
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { border-top: 1px solid var(--border-subtle); }
+
+  .project-block {
+    margin-bottom: 5rem;
+  }
+
+  .project-block:last-child { margin-bottom: 0; }
+
+  .project-header-img {
+    width: 100%;
+    aspect-ratio: 2.15 / 1;
+    object-fit: cover;
+    border: 1px solid var(--border-subtle);
+    display: block;
+  }
+
+  .project-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-top: none;
+  }
+
+  .project-info {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .project-media {
+    border-left: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-screenshots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    flex: 1;
+  }
+
+  .project-screenshots img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-right: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: opacity 0.3s;
+  }
+
+  .project-screenshots img:nth-child(even) { border-right: none; }
+  .project-screenshots img:nth-child(n+3) { border-bottom: none; }
+  .project-screenshots img:hover { opacity: 0.8; }
+
+  .project-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .project-studio {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  .project-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    padding: 0.3rem 0.8rem;
+    background: rgba(233,69,96,0.1);
+    border: 1px solid rgba(233,69,96,0.2);
+    color: var(--accent-primary);
+    text-transform: uppercase;
+  }
+
+  .project-status {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+    border: 1px solid;
+    margin-bottom: 1rem;
+    width: fit-content;
+  }
+
+  .status-released { color: #4ecca3; border-color: #4ecca3; }
+  .status-coming { color: #f7b731; border-color: #f7b731; }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s, gap 0.3s;
+  }
+
+  .project-link:hover { color: var(--accent-primary); gap: 1rem; }
+  .project-link .arrow { transition: transform 0.3s; }
+  .project-link:hover .arrow { transform: translateX(4px); }
+
+  /* ── GAME JAMS ── */
+  #gamejams { border-top: 1px solid var(--border-subtle); }
+
+  .jams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .jam-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.3s, box-shadow 0.4s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .jam-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(233,69,96,0.12);
+  }
+
+  .jam-thumb-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--bg-mid), var(--bg-card));
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .jam-info { padding: 1.25rem; }
+
+  .jam-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+
+  .jam-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .jam-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .jam-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .jam-play {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+  }
+
+  .jams-footer {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .jams-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--accent-primary);
+    background: transparent;
+    color: var(--accent-primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s;
+  }
+
+  .jams-footer a:hover {
+    background: var(--accent-primary);
+    color: var(--bg-deep);
+    box-shadow: 0 0 40px var(--accent-glow);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { border-top: 1px solid var(--border-subtle); }
+
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent-primary), var(--border-subtle), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -3rem;
+    top: 8px;
+    width: 9px; height: 9px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: translateX(-4px);
+  }
+
+  .timeline-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-role {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-company { font-size: 1rem; color: var(--text-muted); margin-bottom: 1rem; }
+
+  .timeline-details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .timeline-details li {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .timeline-details li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+  }
+
+  /* ── SKILLS ── */
+  #skills { border-top: 1px solid var(--border-subtle); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .skill-category {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .skill-category:hover { border-color: var(--accent-primary); transform: translateY(-4px); }
+
+  .skill-cat-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+
+  .skill-cat-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    color: var(--accent-primary);
+  }
+
+  .skill-items { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .skill-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+
+  .skill-item:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    background: rgba(233,69,96,0.05);
+  }
+
+  /* ── EDUCATION ── */
+  #education { border-top: 1px solid var(--border-subtle); }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .edu-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .edu-card:hover { border-color: var(--accent-primary); }
+
+  .edu-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent-primary);
+    letter-spacing: 3px;
+    margin-bottom: 0.75rem;
+  }
+
+  .edu-degree {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-school { color: var(--text-muted); font-size: 0.9rem; }
+
+  .edu-badge {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid;
+  }
+
+  .badge-current { color: #4ecca3; border-color: #4ecca3; }
+  .badge-complete { color: var(--text-dim); border-color: var(--text-dim); }
+
+  /* ── CONTACT ── */
+  #contact {
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+    padding-bottom: 4rem;
+  }
+
+  .contact-tagline {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .contact-btn:hover {
+    border-color: var(--accent-primary);
+    background: rgba(233,69,96,0.1);
+    color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(233,69,96,0.1);
+  }
+
+  .contact-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+  footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .footer-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .project-body { grid-template-columns: 1fr; }
+    .project-media { border-left: none; border-top: 1px solid var(--border-subtle); }
+    .edu-grid { grid-template-columns: 1fr; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+    section { padding: 4rem 1.5rem; }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.75rem 1rem; }
+    .nav-links { display: none; }
+    .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .contact-links { flex-direction: column; align-items: center; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">RCM</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#gamejams">Game Jams</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-label">Game Developer &amp; Software Engineer</div>
+    <h1 class="hero-name">RADU-CONSTANTIN<br>MATUSA</h1>
+    <p class="hero-title">Unity Developer · Startup Co-Founder · ITU Copenhagen</p>
+    <a href="#projects" class="hero-cta">View My Work <span class="arrow">→</span></a>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-number">01 //</div>
+    <h2 class="section-title">ABOUT ME</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a <strong>Unity game developer</strong> based in Copenhagen, currently pursuing a <strong>Master's in Games</strong> at the IT University of Copenhagen. I've spent the last five years building, shipping, and leading game projects — from co-founding a startup to managing junior devs as a lead programmer.</p>
+      <p>My journey started with a <strong>Bachelor's in Computer Science</strong> and a startup incubator that turned into <strong>Empty Box</strong>, a company where I took a game from concept to release on Steam. From there I moved on to <strong>Runic Dices Entertainment</strong> as Lead Unity Developer, overseeing architecture, scheduling, and mentoring a team of 3–5 developers.</p>
+      <p>I thrive in fast-paced environments where creative problem-solving meets technical execution. Whether it's designing movement systems, building roguelite mechanics, or presenting at industry events — I'm always looking for the next challenge.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Games Shipped</div></div>
+      <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label">Years in Gamedev</div></div>
+      <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Studios</div></div>
+      <div class="stat-card"><div class="stat-number">MSc</div><div class="stat-label">ITU Copenhagen</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-number">02 //</div>
+    <h2 class="section-title">PROJECTS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- TRACEBOUND -->
+  <div class="project-block reveal">
+    <img class="project-header-img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4240440/7b22f3e39ed2df6d9099c4de4ecd1f520e4e41ae/header.jpg?t=1770835822" alt="Tracebound" loading="lazy">
+    <div class="project-body">
+      <div class="project-info">
+        <div class="project-year">2026 — KettleLess / DADIU</div>
+        <h3 class="project-name">Tracebound</h3>
+        <p class="project-studio">Published by DADIU</p>
+        <span class="project-status status-released">Released — 85% Positive</span>
+        <p class="project-desc">A fast-paced atmospheric ice-skating action-runner. Play as Ayor, gliding across the body of a colossal bound giant, carving frozen traces to shatter its chains and restore nature. Features flow-based movement, environmental storytelling, and evolving traversal challenges.</p>
+        <div class="project-tags">
+          <span class="tag">Action Runner</span>
+          <span class="tag">3D</span>
+          <span class="tag">Atmospheric</span>
+          <span class="tag">Skating</span>
+          <span class="tag">Free to Play</span>
+        </div>
+        <a href="https://store.steampowered.com/app/4240440/Tracebound/" target="_blank" class="project-link">View on Steam <span class="arrow">→</span></a>
+      </div>
+      <div class="project-media">
+        <div class="project-screenshots">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4240440/b8e78a53cbb338aab1cfef13ded5a55ffeedaa61/ss_b8e78a53cbb338aab1cfef13ded5a55ffeedaa61.600x338.jpg?t=1770835822" alt="Tracebound screenshot" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4240440/extras/39d7f6d6d486fadd3c28d980e1b4040d.poster.avif?t=1770835822" alt="Tracebound gameplay" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4240440/extras/1de71a58687149046506963455e6de28.poster.avif?t=1770835822" alt="Tracebound skating" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4240440/extras/e158bb3e2f5505074797eed156f03435.poster.avif?t=1770835822" alt="Tracebound chains" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NANOKINGS -->
+  <div class="project-block reveal">
+    <img class="project-header-img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/c214758974ed2d0024c7616c7c22ad9bce84b1f2/header.jpg?t=1776940746" alt="Nanokings" loading="lazy">
+    <div class="project-body">
+      <div class="project-info">
+        <div class="project-year">2023–Present — Runic Dices Entertainment</div>
+        <h3 class="project-name">Nanokings</h3>
+        <p class="project-studio">Runic Dices Entertainment</p>
+        <span class="project-status status-coming">Coming Soon</span>
+        <p class="project-desc">A roguelite RPG blending bullet hell with hack 'n' slash into a unique "Hack & Hell" experience. Set in post-apocalyptic Mykrafjordur, fight mutated creatures and rival Viking tribes. Features procedurally generated stages, skill trees, a brotherhood system, and deep Norse-inspired lore.</p>
+        <div class="project-tags">
+          <span class="tag">Roguelite</span>
+          <span class="tag">Hack & Slash</span>
+          <span class="tag">Bullet Hell</span>
+          <span class="tag">Pixel Art</span>
+          <span class="tag">Vikings</span>
+        </div>
+        <a href="https://store.steampowered.com/app/2142550/Nanokings/" target="_blank" class="project-link">View on Steam <span class="arrow">→</span></a>
+      </div>
+      <div class="project-media">
+        <div class="project-screenshots">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/bad5d1159fe6a17484b5fac5ba80ac0b.poster.avif?t=1776940746" alt="Nanokings combat" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/b98e13270212f1240942450cf0bd8a88.poster.avif?t=1776940746" alt="Nanokings enemies" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/010d3688469adda15bccd19981a69050.poster.avif?t=1776940746" alt="Nanokings boss" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2142550/extras/84e355982aba14df70eb312616647e9f.poster.avif?t=1776940746" alt="Nanokings gameplay" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NANOHIVE -->
+  <div class="project-block reveal">
+    <img class="project-header-img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/header.jpg?t=1664573659" alt="NanoHive" loading="lazy">
+    <div class="project-body">
+      <div class="project-info">
+        <div class="project-year">2020–2023 — Empty Box</div>
+        <h3 class="project-name">NanoHive</h3>
+        <p class="project-studio">Empty Box (Co-founded)</p>
+        <span class="project-status status-released">Released — 92% Positive</span>
+        <p class="project-desc">A fast-paced free-to-play top-down arena shooter set inside a human body. Operate a high-tech hive of nanobots, absorb bacteria, and race to eradicate infections. Compete with others on leaderboards to become the fastest NanoHive Operator.</p>
+        <div class="project-tags">
+          <span class="tag">Top-Down Shooter</span>
+          <span class="tag">Free to Play</span>
+          <span class="tag">Sci-Fi</span>
+          <span class="tag">Arena</span>
+          <span class="tag">Pixel Art</span>
+        </div>
+        <a href="https://store.steampowered.com/app/1995320/NanoHive/" target="_blank" class="project-link">View on Steam <span class="arrow">→</span></a>
+      </div>
+      <div class="project-media">
+        <div class="project-screenshots">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/b109e53696fe58b7b4e5c10e9a0a1eab.poster.avif?t=1664573659" alt="NanoHive gameplay" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/73f89c9e923bcc9ee594285da95a4eb4.poster.avif?t=1664573659" alt="NanoHive nanobots" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/ffda82a9e8ba6c0cd1dc5718b310d660.poster.avif?t=1664573659" alt="NanoHive absorb" loading="lazy">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1995320/extras/b05a0f61212f29d9f3d491dd5f1b35e6.poster.avif?t=1664573659" alt="NanoHive speed" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- GAME JAMS -->
+<section id="gamejams">
+  <div class="section-header reveal">
+    <div class="section-number">03 //</div>
+    <h2 class="section-title">GAME JAMS & EXPERIMENTS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="jams-grid reveal">
+    <a class="jam-card" href="https://dj-dave.itch.io/bobo-the-nightslayer" target="_blank">
+      <div class="jam-thumb-placeholder">🧸</div>
+      <div class="jam-info">
+        <div class="jam-name">Bobo the Nightslayer</div>
+        <div class="jam-desc">Command the toy army and slay the nightmares to protect your human's dreams.</div>
+        <div class="jam-meta"><span class="jam-type">Play in Browser</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://turoxd02.itch.io/no-cats-in-heaven" target="_blank">
+      <div class="jam-thumb-placeholder">🐱</div>
+      <div class="jam-info">
+        <div class="jam-name">No Cats in Heaven</div>
+        <div class="jam-desc">Fast-paced arcade freefall inspired by Downwell: escape an angel as you dive through the sky in search of your lost cat.</div>
+        <div class="jam-meta"><span class="jam-type">Play in Browser</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://empty-box.itch.io/smash-pool" target="_blank">
+      <div class="jam-thumb-placeholder">🎱</div>
+      <div class="jam-info">
+        <div class="jam-name">Smash Pool</div>
+        <div class="jam-desc">Good old pool, but with significantly more chaos.</div>
+        <div class="jam-meta"><span class="jam-type">Play in Browser</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://andreimatao.itch.io/catharsis" target="_blank">
+      <div class="jam-thumb-placeholder">🌸</div>
+      <div class="jam-info">
+        <div class="jam-name">Cottage Core Catharsis</div>
+        <div class="jam-desc">A peaceful picnic at sunset, turned psychedelic extravaganza.</div>
+        <div class="jam-meta"><span class="jam-type">Play in Browser</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://radu-constantin-matusa.itch.io/doors-98exe" target="_blank">
+      <div class="jam-thumb-placeholder">🚪</div>
+      <div class="jam-info">
+        <div class="jam-name">DOORS 98.EXE</div>
+        <div class="jam-desc">Macrohard — A retro-themed platformer with a Windows 98 twist.</div>
+        <div class="jam-meta"><span class="jam-type">Play in Browser</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://radu-constantin-matusa.itch.io/danish-weather-forecast" target="_blank">
+      <div class="jam-thumb-placeholder">🌧️</div>
+      <div class="jam-info">
+        <div class="jam-name">Danish Weather Forecast</div>
+        <div class="jam-desc">Unleash your inner meteorologist, and show the world what you're really made of!</div>
+        <div class="jam-meta"><span class="jam-type">Game</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://empty-box.itch.io/original-sin" target="_blank">
+      <div class="jam-thumb-placeholder">🔥</div>
+      <div class="jam-info">
+        <div class="jam-name">Original Sin</div>
+        <div class="jam-desc">A night of ancient myths shared around a cozy fire.</div>
+        <div class="jam-meta"><span class="jam-type">Platformer</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://radu-constantin-matusa.itch.io/detective-wizard-the-smoking-owl" target="_blank">
+      <div class="jam-thumb-placeholder">🦉</div>
+      <div class="jam-info">
+        <div class="jam-name">Detective Wizard: The Smoking Owl</div>
+        <div class="jam-desc">Play as a wizard detective investigating the murder of an owl familiar.</div>
+        <div class="jam-meta"><span class="jam-type">Play in Browser</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://faluditomi.itch.io/korosseo" target="_blank">
+      <div class="jam-thumb-placeholder">⚔️</div>
+      <div class="jam-info">
+        <div class="jam-name">Korosseo</div>
+        <div class="jam-desc">A wave-based, first person, arena shooter.</div>
+        <div class="jam-meta"><span class="jam-type">Shooter</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+    <a class="jam-card" href="https://radu-constantin-matusa.itch.io/the-trainwreck" target="_blank">
+      <div class="jam-thumb-placeholder">🚂</div>
+      <div class="jam-info">
+        <div class="jam-name">The Trainwreck</div>
+        <div class="jam-desc">Coal above all. Nothing else matters.</div>
+        <div class="jam-meta"><span class="jam-type">Simulation</span><span class="jam-play">Play →</span></div>
+      </div>
+    </a>
+  </div>
+  <div class="jams-footer reveal">
+    <a href="https://radu-constantin-matusa.itch.io/" target="_blank">See all on itch.io →</a>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-number">04 //</div>
+    <h2 class="section-title">EXPERIENCE</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-date">AUG 2023 — AUG 2025</div>
+      <div class="timeline-role">Lead Unity Developer</div>
+      <div class="timeline-company">Runic Dices Entertainment</div>
+      <ul class="timeline-details">
+        <li>Managed 3–5 junior developers, delegating and reviewing programming tasks</li>
+        <li>Collaborated with a Producer to plan development schedules</li>
+        <li>Documented changes following the completion of each task</li>
+        <li>Led development of Nanokings — a roguelite Hack & Hell game</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">AUG 2020 — AUG 2023</div>
+      <div class="timeline-role">Co-Founder & Unity Developer</div>
+      <div class="timeline-company">Empty Box</div>
+      <ul class="timeline-details">
+        <li>Created a startup during the university's Start-up Incubator program</li>
+        <li>Fully developed and released NanoHive on Steam</li>
+        <li>Presented the game at industry events and networked with professionals</li>
+        <li>Learned to be an independent, self-sustained developer and entrepreneur</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-number">05 //</div>
+    <h2 class="section-title">SKILLS & TOOLS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-category">
+      <div class="skill-cat-icon">🎮</div>
+      <div class="skill-cat-title">Game Engines</div>
+      <div class="skill-items">
+        <span class="skill-item">Unity</span>
+        <span class="skill-item">Unreal Engine</span>
+        <span class="skill-item">Godot</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">💻</div>
+      <div class="skill-cat-title">Languages</div>
+      <div class="skill-items">
+        <span class="skill-item">C#</span>
+        <span class="skill-item">C++</span>
+        <span class="skill-item">Python</span>
+        <span class="skill-item">Java</span>
+        <span class="skill-item">JavaScript</span>
+        <span class="skill-item">GDScript</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">🛠️</div>
+      <div class="skill-cat-title">Tools & Platforms</div>
+      <div class="skill-items">
+        <span class="skill-item">Git / GitHub</span>
+        <span class="skill-item">Jira</span>
+        <span class="skill-item">Trello</span>
+        <span class="skill-item">Steamworks</span>
+        <span class="skill-item">Visual Studio</span>
+        <span class="skill-item">Rider</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">🧠</div>
+      <div class="skill-cat-title">Specialties</div>
+      <div class="skill-items">
+        <span class="skill-item">Gameplay Programming</span>
+        <span class="skill-item">Team Leadership</span>
+        <span class="skill-item">Game Architecture</span>
+        <span class="skill-item">Agile / Scrum</span>
+        <span class="skill-item">Prototyping</span>
+        <span class="skill-item">Publishing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-number">06 //</div>
+    <h2 class="section-title">EDUCATION</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-grid reveal">
+    <div class="edu-card">
+      <span class="edu-badge badge-current">In Progress</span>
+      <div class="edu-date">SEP 2024 — 2026</div>
+      <div class="edu-degree">Master's in Games</div>
+      <div class="edu-school">IT University of Copenhagen</div>
+    </div>
+    <div class="edu-card">
+      <span class="edu-badge badge-complete">Completed</span>
+      <div class="edu-date">SEP 2018 — JUN 2022</div>
+      <div class="edu-degree">Bachelor's in Computer Science</div>
+      <div class="edu-school">University College of Northern Denmark</div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-line"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-number">07 //</div>
+    <h2 class="section-title">GET IN TOUCH</h2>
+    <div class="section-line" style="margin-left:auto;margin-right:auto;"></div>
+  </div>
+  <p class="contact-tagline reveal">Interested in working together, have a game idea, or just want to say hello? Let's connect.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:matusaradu@gmail.com" class="contact-btn">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Email
+    </a>
+    <a href="https://www.linkedin.com/in/radu-constantin-matusa/" target="_blank" class="contact-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/FoxDeath" target="_blank" class="contact-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+      GitHub
+    </a>
+    <a href="https://radu-constantin-matusa.itch.io/" target="_blank" class="contact-btn">
+      <svg viewBox="0 0 24 24"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303.6 2.436 1.523 2.436.924 0 1.674-.78 1.674-2.436 0 1.656.676 2.436 1.6 2.436.924 0 1.45-.78 1.45-2.436 0 1.656.676 2.436 1.6 2.436.923 0 1.45-.78 1.45-2.436 0 1.656.75 2.436 1.674 2.436.923 0 1.674-.78 1.674-2.436 0 1.656.75 2.436 1.674 2.436.923 0 1.45-.78 1.45-2.436 0 1.656.676 2.436 1.6 2.436.923 0 1.45-.78 1.45-2.436 0 1.656.676 2.436 1.6 2.436.923 0 1.674-.78 1.674-2.436 0 1.656.75 2.436 1.674 2.436.923 0 1.523-1.133 1.523-2.436V4.95C24 4.328 21.92 1.96 20.87 1.338c-1.573-.856-5.78-1.212-8.87-1.212-3.09 0-7.297.356-8.87 1.212zM9.6 10.105c-.6.66-1.397 1.05-2.35 1.05-.952 0-1.752-.413-2.35-1.073C4.3 10.743 3.4 11.155 2.45 11.155c-.478 0-.924-.127-1.323-.338-.076 1.86-.076 3.79-.076 4.467 0 4.467.075 5.696.478 7.088.176.607 1.323 1.502 3.198 1.502h14.47c1.876 0 3.022-.895 3.198-1.502.403-1.392.478-2.621.478-7.088 0-.676 0-2.606-.076-4.467-.4.211-.845.338-1.323.338-.95 0-1.85-.413-2.45-1.073-.6.66-1.397 1.073-2.35 1.073-.952 0-1.752-.39-2.35-1.05-.598.66-1.397 1.05-2.35 1.05-.952 0-1.752-.39-2.35-1.05zm-.45 4.467h5.7v5.7H9.15v-5.7z"/></svg>
+      Itch.io
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-text">© 2026 Radu-Constantin Matusa — Built with passion for games</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 100
+      ? 'rgba(10, 10, 15, 0.95)'
+      : 'rgba(10, 10, 15, 0.7)';
+  });
+</script>
+
+</body>
+</html>
